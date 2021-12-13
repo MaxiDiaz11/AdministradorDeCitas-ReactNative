@@ -2,9 +2,10 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-const Cita = ({item}) => {
-  const dialogoEliminar = () => {
-    console.log('Eliminando...');
+const Cita = ({item, eliminarPaciente}) => {
+  const dialogoEliminar = id => {
+    console.log('Eliminando...', id);
+    eliminarPaciente(id);
   };
 
   return (
@@ -24,7 +25,7 @@ const Cita = ({item}) => {
       <View>
         <TouchableOpacity
           style={styles.btnEliminar}
-          onPress={() => dialogoEliminar()}>
+          onPress={() => dialogoEliminar(item.id)}>
           <Text style={styles.textEliminar}>Eliminar &times;</Text>
         </TouchableOpacity>
       </View>
