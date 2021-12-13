@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import Cita from './src/components/Cita';
+import Formulario from './src/components/Formulario';
 
 const App = () => {
   //Definir el state de citas
@@ -18,19 +19,24 @@ const App = () => {
   };
 
   return (
-    <View style={styles.contenedor}>
-      <Text style={styles.titulo}>Administrador de Citas</Text>
-      <Text style={styles.titulo}>
-        {citas.length > 0 ? 'Administra tus citas' : 'No hay citas, agrega una'}
-      </Text>
-      <FlatList
-        data={citas}
-        renderItem={({item}) => (
-          <Cita item={item} eliminarPaciente={eliminarPaciente} />
-        )}
-        keyExtractor={cita => cita.id}
-      />
-    </View>
+    <ScrollView>
+      <View style={styles.contenedor}>
+        <Text style={styles.titulo}>Administrador de Citas</Text>
+        <Formulario />
+        <Text style={styles.titulo}>
+          {citas.length > 0
+            ? 'Administra tus citas'
+            : 'No hay citas, agrega una'}
+        </Text>
+        <FlatList
+          data={citas}
+          renderItem={({item}) => (
+            <Cita item={item} eliminarPaciente={eliminarPaciente} />
+          )}
+          keyExtractor={cita => cita.id}
+        />
+      </View>
+    </ScrollView>
   );
 };
 

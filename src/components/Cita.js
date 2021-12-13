@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
     paddingHorizontal: 10,
+    marginHorizontal: '2.5%',
   },
   label: {
     marginTop: 20,
