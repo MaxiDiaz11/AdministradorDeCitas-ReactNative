@@ -8,10 +8,12 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
+import shortid from 'shortid';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const Formulario = () => {
+const Formulario = ({citas, setCitas, setMostrarForm}) => {
   const [paciente, setPaciente] = useState('');
   const [propietario, setPropietario] = useState('');
   const [contacto, setContacto] = useState('');
@@ -57,7 +59,7 @@ const Formulario = () => {
     ]);
   };
 
-  const crearNuevCita = () => {
+  const crearNuevaCita = () => {
     //VALIDAR
     if (
       paciente.trim() === '' ||
@@ -70,11 +72,24 @@ const Formulario = () => {
       mostrarAlerta();
       return;
     }
+
+    //crear cita
+    const cita = {paciente, propietario, contacto, fecha, hora, sintomas};
+    cita.id = shortid.generate();
+
+    //agregar cita al state
+    const citasNuevas = [...citas, cita];
+    setCitas(citasNuevas);
+
+    //ocultar Formulario
+    setMostrarForm(false);
+
+    //resetear form
   };
 
   return (
     <>
-      <View>
+      <ScrollView>
         <View style={styles.formulario}>
           <Text style={styles.label}>Paciente: </Text>
           <TextInput
@@ -139,12 +154,12 @@ const Formulario = () => {
 
         <View style={styles.formulario}>
           <TouchableOpacity
-            onPress={() => crearNuevCita()}
+            onPress={() => crearNuevaCita()}
             style={styles.btnSubmit}>
             <Text style={styles.textSubmit}>Agregar cita</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -166,7 +181,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginHorizontal: '2.5%',
   },
   txtFechaHora: {
     marginTop: 5,
